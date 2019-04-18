@@ -83,7 +83,7 @@ public extension BioMetricAuthenticator {
     public func faceIDAvailable() -> Bool {
         if #available(iOS 11.0, *) {
             let context = LAContext()
-            return (context.canEvaluatePolicy(LAPolicy.deviceOwnerAuthenticationWithBiometrics, error: nil) && context.biometryType == .typeFaceID)
+            return (context.canEvaluatePolicy(LAPolicy.deviceOwnerAuthenticationWithBiometrics, error: nil) && context.biometryType == .faceID)
         }
         return false
     }
@@ -109,7 +109,7 @@ extension BioMetricAuthenticator {
             DispatchQueue.main.async {
                 if success { successBlock() }
                 else {
-                    let errorType = AuthenticationError(error: err as! LAError)
+                    let errorType = AuthenticationError.init(error: err as! LAError)
                     failureBlock(errorType)
                 }
             }
